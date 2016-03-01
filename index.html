@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myapp">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="mycontroller">
+{{counter}} {{counter2}}
+<input type="button" value="Counter1" ng-click="incrementer()">
+<input type="button" value="Counter2" ng-click="incrementer2()">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<script>
+    angular.module('myapp', [])
+            .controller('mycontroller', function($scope, $http) {
+                $http.get('/counter').success(function(data) {
+                    $scope.counter = data;
+                });
+
+                $http.get('/counter2').success(function(data) {
+                    $scope.counter2 = data;
+                });
+
+                $scope.incrementer = function() {
+                    $http.post('/counter').success(function(data) {
+                        $scope.counter = data;
+                    });
+                };
+
+                $scope.incrementer2 = function() {
+                    $http.post('/counter2').success(function(data) {
+                        $scope.counter2 = data;
+                    });
+                }
+            });
+</script>
+</body>
+</html>
